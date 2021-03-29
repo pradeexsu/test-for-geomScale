@@ -15,13 +15,6 @@
 
 ## generating random H-polytope using `gen_rand_hpoly()` function of volesti.
 
-```R
-library('volesti')
-
-randomHPolytop = gen_rand_hpoly(13, 53)
-#generate a 13-dimensional Hpolytope with 53 facets
-randomHPolytop
-```
 ### output:
 ```
 An object of class "Hpolytope"
