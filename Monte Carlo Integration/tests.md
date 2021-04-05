@@ -31,32 +31,57 @@ To run a test for integral of `f(x) = exp^{-a||x||^2}` over the cube `[-1,1]^n`,
 
 ### code 
 i have used `cubintegrate()` function of `cubature` for finding integration of f(X) over an n-dimensional cube(hypercube).
-<!--
 ```R
 library('cubature')
-a_min_lim = -5
-a_max_lim = 5
+
 d = 1
 
 while(T){
-  for (a  in a_min_lim:a_max_lim){
+  for (a  in c(-3:3)){
+
     eqn = function(x){ 
       norm_value = 0
       for (xi in x){
           norm_value = norm_value + xi^2
         }
         exp(-a*norm_value) 
-      }
+    }
+
     integral <- cubintegrate(f = eqn, lower = rep(-1,d) , upper =  rep(1,d))
     print(paste('[ a =', a, ']', '    [ d =', d, ']     ', integral$integral ))
-    }
-    d = d+1
+  }
+    d <- d+1
 }
 ```
--->
-i have taken value of `a` from `(-3, -2, -1, 0, 1, 2, 3)`
-where as dimensions value `d` starts from 1 to  increment till program crashes( when `d >= 24` ).
+i have taken value of `a` from `-3` to `3`. where as dimensions value `d` starts from 1 to  increment till program crashes ( when `d >= 24` ).
+```sh
+[1] "[ a = -3 ]     [ d = 1 ]      8.44442398577702"
+[1] "[ a = -2 ]     [ d = 1 ]      4.72890778561042"
+[1] "[ a = -1 ]     [ d = 1 ]      2.92530349181436"
+[1] "[ a = 0 ]     [ d = 1 ]      2"
+[1] "[ a = 1 ]     [ d = 1 ]      1.49364826562485"
+[1] "[ a = 2 ]     [ d = 1 ]      1.19628801332263"
+[1] "[ a = 3 ]     [ d = 1 ]      1.00868712046288"
+[1] "[ a = -3 ]     [ d = 2 ]      71.3082963730533"
+[1] "[ a = -2 ]     [ d = 2 ]      22.362568799364"
+[1] "[ a = -1 ]     [ d = 2 ]      8.55740049207686"
+[1] "[ a = 0 ]     [ d = 2 ]      4"
+...
+[1] "[ a = 0 ]     [ d = 23 ]      8388608.00000001"
+[1] "[ a = 1 ]     [ d = 23 ]      12368647.0617252"
+[1] "[ a = 2 ]     [ d = 23 ]      29259348.6431253"
+[1] "[ a = 3 ]     [ d = 23 ]      36107139.7942574"
+[1] "[ a = -3 ]     [ d = 24 ]      0"
+[1] "[ a = -2 ]     [ d = 24 ]      0"
+...
+ *** caught segfault ***
+address 0x7fa120125050, cause 'invalid permissions'
+malloc(): corrupted top size
+Aborted (core dumped)
+```
+[complete output for medium test ](https://github.com/sutharp777/test-for-geomScale/issues/1)
 
+--- 
 
 ## hard-test
 
@@ -96,7 +121,9 @@ sys	0m0.165s
 
 ### comparison of output:
 **volesti output**     : 
+
 7.3243602036296e+19  ~=         73243602036296000000
+
 **cubature output** :       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             55239072207717195776
 
 we can see that our order of output is almost the same ( same number of digits ).
